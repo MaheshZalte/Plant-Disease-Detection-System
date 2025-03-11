@@ -1,0 +1,124 @@
+{
+    "Potato___Early_blight": {
+        "plant": "Potato",
+        "solution": "Apply fungicides containing chlorothalonil or copper.",
+        "treatment": [
+            "Remove affected leaves to stop the spread.",
+            "Spray with chlorothalonil-based fungicide every 7-10 days.",
+            "Avoid watering leaves; water the soil instead.",
+            "Use a balanced nitrogen fertilizer to strengthen plant immunity."
+        ],
+        "prevention": [
+            "Ensure proper soil drainage to prevent excessive moisture.",
+            "Avoid planting potatoes in the same soil every year.",
+            "Use disease-resistant potato varieties.",
+            "Keep spacing between plants to improve airflow."
+        ],
+        "products": [
+            {
+                "name": "Daconil Fungicide",
+                "link": "https://www.amazon.com/dp/B01M1HSYPU",
+                "image": "https://example.com/daconil.jpg"
+            },
+            {
+                "name": "Copper Soap Fungicide",
+                "link": "https://www.flipkart.com/copper-soap-fungicide",
+                "image": "https://example.com/copper-fungicide.jpg"
+            }
+        ],
+        "treatment_images": [
+            "https://example.com/correct-spraying.jpg",
+            "https://example.com/removing-infected-leaves.jpg"
+        ]
+    },
+    "Tomato___Late_blight": {
+        "plant": "Tomato",
+        "solution": "Use copper-based fungicides and destroy infected plants.",
+        "treatment": [
+            "Remove infected leaves and burn them to prevent spread.",
+            "Apply copper-based fungicide once symptoms appear.",
+            "Increase airflow by spacing plants properly."
+        ],
+        "prevention": [
+            "Use resistant tomato varieties.",
+            "Avoid overhead watering; water at the base.",
+            "Rotate crops to prevent reinfection."
+        ],
+        "products": [
+            {
+                "name": "Bonide Copper Fungicide",
+                "link": "https://www.amazon.com/dp/B000UJVDXY",
+                "image": "https://example.com/bonide-copper.jpg"
+            }
+        ],
+        "treatment_images": [
+            "https://example.com/tomato-late-blight-treatment.jpg"
+        ]
+    },
+    "Apple___Apple_scab": {
+        "plant": "Apple",
+        "solution": "Use sulfur-based fungicides and prune infected areas.",
+        "treatment": [
+            "Prune infected leaves and branches.",
+            "Apply sulfur-based fungicide before the rainy season."
+        ],
+        "prevention": [
+            "Plant resistant apple varieties.",
+            "Ensure good air circulation around trees."
+        ],
+        "products": [
+            {
+                "name": "Sulfur Plant Fungicide",
+                "link": "https://www.amazon.com/dp/B000HHLWZQ",
+                "image": "https://example.com/sulfur-fungicide.jpg"
+            }
+        ],
+        "treatment_images": [
+            "https://example.com/apple-scab-treatment.jpg"
+        ]
+    },
+    "Strawberry___Leaf_scorch": {
+        "plant": "Strawberry",
+        "solution": "Use fungicides containing myclobutanil and remove infected leaves.",
+        "treatment": [
+            "Remove and destroy infected leaves.",
+            "Apply myclobutanil-based fungicide every 10-14 days."
+        ],
+        "prevention": [
+            "Keep strawberry plants well-spaced to ensure good airflow.",
+            "Avoid overhead watering."
+        ],
+        "products": [
+            {
+                "name": "Myclobutanil Fungicide",
+                "link": "https://www.amazon.com/dp/B00061O4DW",
+                "image": "https://example.com/myclobutanil.jpg"
+            }
+        ],
+        "treatment_images": [
+            "https://example.com/strawberry-leaf-scorch.jpg"
+        ]
+    },
+    "Grape___Black_rot": {
+        "plant": "Grape",
+        "solution": "Use Mancozeb or Myclobutanil fungicide.",
+        "treatment": [
+            "Remove infected grape clusters and burn them.",
+            "Apply fungicide containing Mancozeb or Myclobutanil."
+        ],
+        "prevention": [
+            "Ensure vines receive good airflow and sunlight.",
+            "Use disease-resistant grape varieties."
+        ],
+        "products": [
+            {
+                "name": "Mancozeb Fungicide",
+                "link": "https://www.amazon.com/dp/B00061O4DW",
+                "image": "https://example.com/mancozeb.jpg"
+            }
+        ],
+        "treatment_images": [
+            "https://example.com/grape-black-rot-treatment.jpg"
+        ]
+    }
+}

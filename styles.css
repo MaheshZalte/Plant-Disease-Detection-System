@@ -1,0 +1,46 @@
+/* Background Styling */
+.stApp {
+    background: url("data:image/jpg;base64,YOUR_BASE64_ENCODED_IMAGE") no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(8px) brightness(0.85);
+}
+
+/* Button Styling */
+button, .stButton>button {
+    box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    background-color: rgba(245, 245, 245, 0.95);
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover, .stButton>button:hover {
+    box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 1);
+}
+
+/* Login Button */
+#login-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#login-button:hover {
+    background-color: #45a049;
+}
+
+/* General UI Enhancements */
+.stMarkdown {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}

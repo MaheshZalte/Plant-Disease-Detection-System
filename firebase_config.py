@@ -1,0 +1,35 @@
+import pyrebase
+
+# Replace these with your own Web App’s config (from Firebase Console > Project Settings > General > Your Apps)
+firebaseConfig = {
+            "type": "service_account",
+            "project_id": "plant-disease-detection-2e61f",
+            "private_key_id": "25ac734008047f7e34f0f9f2d476ecb040ff50e9",
+            "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCU/oG1cJRAFJGZ\nhi9FLoYoEL0OL14k1DAYusWTsgfLsC4zH0iOlwhpC3f5mXLtI3o1UkZpNkhLnpRl\nlFYGh3UN73NDAbeNaCqQCXcjuRDFVdbQmF7GpJ/Zu7XUW0hQ5SsHy6kEosXsuR0B\nZiWMy930WeQSP8zzjV698uOFzvwclG4GuTJwmPs1jFGWeBCipCKKzECV67FenkNu\ns+GiqdJEd+SBlvrgKR5x8Z32cxagw/esT58RwpG3Xj2IjC9+GbIB6szJAjN5PjqZ\n8V3UJ1VvnnHQF24OaarziOyYM9C3RiaTXF1CnbOxf9GJ/CzgeBiqT/7yxMoIHaob\nU7BypoOlAgMBAAECggEAE3f0E/TLclodsl1dxODw58BUK8vVteNCC6EwGv361ctG\nJijyzqr+jtdQTH2YDlOB7wC6sZnFtZfZlTJeUUkW6wS8X2eUh/YyBZMvDaxrfBWc\n1bHrRHKTbpyABGkPGH7xcfnTModgbG+90gZ6Zpzm+jxauGW8zqBM3m4j+8KRn9w0\nNNzf2he/tdubNmVQe5GPUOcHg7MYvsMk+kKqoepyYVb7P8EAU28fIHZPqbd3ZgRk\nlXai7qkUSVKKljy6uAEfWDAqvGSvdeEBG4FFq2OHJpip++YelGRPh60c5+m355kj\nxdTIXO0c/IN852udfUDcxluvArgkPgx6/34Gt80Z4QKBgQDLnBdMncNF0GYXXRX2\nkOxIOl3LclxUF4nQhoKG5cVEZteJgFmq3R0iOjDr1mIsViWKE4C9O6jv23px+hF5\nVCT9k+GecUMDz2L1fYxtzT5ig4EBO3ch+KeQPxvP3U5sBhBGVNFfZNkrBa5U4LWN\nyuQju3o7S1apxqbx+XNagDtYUQKBgQC7VNobi23gZRhTEPcdG2NBXGx42pmADIj/\n6An8oMots7vPjkX+lOrva6avGufKyIo7QljgobXBxilr9g2/g4n4vndYB1GJxytA\nq9xYYhyTQbzkxyT72SpsQcMlR3DEHtEPrCnrRAlxYTPucRbDaOmtiem803mToI0I\nssX6RCe1FQKBgA5GlG+fxBg6A15x/V87TAXIadkg3I5c1CHVvIMeyxT/rO8MG71a\nIXfL4rA2aM25AIrM0ULzUuX2WoBxSxZZqvpIixIj2NIEkWiq89SjBlO76qiedbzh\nBUac1iNd3ei/CBcWTVPF62AT1uRGmRQm/JXwyCIuJxZiQkRG/CqFQSPxAoGBALdF\nCCyyd8h0nxuFGX1Mcgpb1XNWyZ3QpadW545T7/hOQouIcUnjfwTEmMnu1J47G6Fm\nA3WgPyVYLOYGTuTyV2UXUcK5Rjg4tkQK3wNI2RPn2FkpyzDpAOvwWm56OgRk8bsX\nf9s/MM3PfvLjiJWcaiDxL88gRWz8QX4lCDMTwpURAoGBAMaNAN8BKLG8hh4a3l7l\ndZB6arUGkni0ilKD0aBWzGL3o1YZfHN4MRcOhf/zzCClSJuoii3C0GMZ+R8enX00\n9bOiOYJnIMzNkubT1kG7to1dNAQRbjJPXVpalT0vGGhTURTfeKv7c9ASL0PqCKkx\n5aIjQ9bWdUEZw0P4Ob7B8h4a\n-----END PRIVATE KEY-----\n",
+            "client_email": "firebase-adminsdk-fbsvc@plant-disease-detection-2e61f.iam.gserviceaccount.com",
+            "client_id": "110356735652348587621",
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40plant-disease-detection-2e61f.iam.gserviceaccount.com",
+            "universe_domain": "googleapis.com"
+}
+
+firebase = pyrebase.initialize_app(firebaseConfig)
+auth = firebase.auth()
+
+def firebase_login(email, password):
+    try:
+        user = auth.sign_in_with_email_and_password(email, password)
+        # Returns a dict with keys like 'idToken', 'refreshToken', etc.
+        return user
+    except Exception as e:
+        return {"error": str(e)}
+
+def firebase_signup(email, password):
+    try:
+        user = auth.create_user_with_email_and_password(email, password)
+        # Returns a dict with keys like 'idToken'
+        return user
+    except Exception as e:
+        return {"error": str(e)}
