@@ -35,7 +35,18 @@ if not firebase_admin._apps:
         # Check if running on Streamlit Cloud
         if 'firebase' in st.secrets:
             # Use secrets from Streamlit Cloud
-            cred = credentials.Certificate(st.secrets["firebase"])
+            cred = credentials.Certificate({
+                "type": st.secrets["firebase"]["type"],
+                "project_id": st.secrets["firebase"]["project_id"],
+                "private_key_id": st.secrets["firebase"]["private_key_id"],
+                "private_key": st.secrets["firebase"]["private_key"].replace('\\n', '\n'),
+                "client_email": st.secrets["firebase"]["client_email"],
+                "client_id": st.secrets["firebase"]["client_id"],
+                "auth_uri": st.secrets["firebase"]["auth_uri"],
+                "token_uri": st.secrets["firebase"]["token_uri"],
+                "auth_provider_x509_cert_url": st.secrets["firebase"]["auth_provider_x509_cert_url"],
+                "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"]
+            })
         else:
             # Use local credentials file
             cred_path = os.path.join(os.getcwd(), "plant_disease_detection.json")
