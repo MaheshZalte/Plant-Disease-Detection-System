@@ -25,14 +25,30 @@ st.set_page_config(
 cred_path = os.path.join(os.getcwd(), "plant_disease_detection.json")
 
 
-if not firebase_admin._apps:
-    if not os.path.exists(cred_path):
-        st.error(f"Error: Firebase credentials file not found at {cred_path}.")
-    else:
-        cred = credentials.Certificate(cred_path)
-        firebase_admin.initialize_app(cred)
+# Initialize global database variable
+global db
+db = None
 
-db = firestore.client()
+# Initialize Firebase only once
+if not firebase_admin._apps:
+    try:
+        # Check if running on Streamlit Cloud
+        if 'firebase' in st.secrets:
+            # Use secrets from Streamlit Cloud
+            cred = credentials.Certificate(st.secrets["firebase"])
+        else:
+            # Use local credentials file
+            cred_path = os.path.join(os.getcwd(), "plant_disease_detection.json")
+            if not os.path.exists(cred_path):
+                st.error(f"Error: Firebase credentials file not found at {cred_path}")
+            else:
+                cred = credentials.Certificate(cred_path)
+        
+        firebase_admin.initialize_app(cred)
+        db = firestore.client()
+        st.success("Firebase connection established!")
+    except Exception as e:
+        st.error(f"Firebase initialization error: {str(e)}")
 
 
 # -----------------------
