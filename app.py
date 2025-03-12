@@ -25,41 +25,14 @@ st.set_page_config(
 cred_path = os.path.join(os.getcwd(), "plant_disease_detection.json")
 
 
-# Initialize global database variable
-global db
-db = None
-
-# Initialize Firebase only once
 if not firebase_admin._apps:
-    try:
-        # Check if running on Streamlit Cloud
-        if 'firebase' in st.secrets:
-            # Use secrets from Streamlit Cloud
-            cred = credentials.Certificate({
-                "type": st.secrets["firebase"]["type"],
-                "project_id": st.secrets["firebase"]["project_id"],
-                "private_key_id": st.secrets["firebase"]["private_key_id"],
-                "private_key": st.secrets["firebase"]["private_key"].replace('\\n', '\n'),
-                "client_email": st.secrets["firebase"]["client_email"],
-                "client_id": st.secrets["firebase"]["client_id"],
-                "auth_uri": st.secrets["firebase"]["auth_uri"],
-                "token_uri": st.secrets["firebase"]["token_uri"],
-                "auth_provider_x509_cert_url": st.secrets["firebase"]["auth_provider_x509_cert_url"],
-                "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"]
-            })
-        else:
-            # Use local credentials file
-            cred_path = os.path.join(os.getcwd(), "plant_disease_detection.json")
-            if not os.path.exists(cred_path):
-                st.error(f"Error: Firebase credentials file not found at {cred_path}")
-            else:
-                cred = credentials.Certificate(cred_path)
-        
+    if not os.path.exists(cred_path):
+        st.error(f"Error: Firebase credentials file not found at {cred_path}.")
+    else:
+        cred = credentials.Certificate(cred_path)
         firebase_admin.initialize_app(cred)
-        db = firestore.client()
-        st.success("Firebase connection established!")
-    except Exception as e:
-        st.error(f"Firebase initialization error: {str(e)}")
+
+db = firestore.client()
 
 
 # -----------------------
@@ -134,15 +107,16 @@ init_session_defaults()
 
 # -------------------
 # 4. LOAD MODEL ONCE
-model_path = os.path.join(os.getcwd(), "PlantDisease_Model.h5")
-if not os.path.exists(model_path):
-    st.error(f"Error: Model file not found at {model_path}")
-else:
+# -------------------
+@st.cache_resource
+def load_model():
     try:
-        model = tf.keras.models.load_model(model_path)
-        st.success("Model loaded successfully!")
+        return tf.keras.models.load_model("PlantDisease_Model.h5")
     except Exception as e:
-        st.error(f"Error loading model: {str(e)}")
+        st.error(f"Error loading model: {e}")
+        return None
+
+model = load_model()
 
 # -------------------------
 # 5. HELPER FUNCTIONS (UI)
@@ -1901,6 +1875,8 @@ def view_feedback_page():
     if st.button("Go Back"):
         st.session_state["app_mode"] = "home"
         st.rerun()
+
+
 
 
 # -----------------------
