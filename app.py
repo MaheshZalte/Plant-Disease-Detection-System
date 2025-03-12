@@ -1877,8 +1877,6 @@ def view_feedback_page():
         st.rerun()
 
 
-
-
 # -----------------------
 # 8. MAIN APP CONTROLLER
 # -----------------------
