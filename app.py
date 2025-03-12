@@ -134,16 +134,15 @@ init_session_defaults()
 
 # -------------------
 # 4. LOAD MODEL ONCE
-# -------------------
-@st.cache_resource
-def load_model():
+model_path = os.path.join(os.getcwd(), "PlantDisease_Model.h5")
+if not os.path.exists(model_path):
+    st.error(f"Error: Model file not found at {model_path}")
+else:
     try:
-        return tf.keras.models.load_model("PlantDisease_Model.h5")
+        model = tf.keras.models.load_model(model_path)
+        st.success("Model loaded successfully!")
     except Exception as e:
-        st.error(f"Error loading model: {e}")
-        return None
-
-model = load_model()
+        st.error(f"Error loading model: {str(e)}")
 
 # -------------------------
 # 5. HELPER FUNCTIONS (UI)
