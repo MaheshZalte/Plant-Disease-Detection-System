@@ -7,24 +7,14 @@ from firebase_admin import auth, credentials, firestore
 import base64
 import os
 import logging
-from datetime  import datetime
+from datetime import datetime
 
-
-
-# --------------------------
-# 1. PAGE CONFIG & FIREBASE
-# --------------------------
+# Page configuration
 st.set_page_config(
     page_title="Plant Disease Recognition",
     layout="centered",
     initial_sidebar_state="expanded"
 )
-
-
-import streamlit as st
-import firebase_admin
-from firebase_admin import credentials, firestore
-import os
 
 # Initialize global database variable
 global db
@@ -33,83 +23,22 @@ db = None
 # Initialize Firebase only once
 if not firebase_admin._apps:
     try:
-        # Check if running on Streamlit Cloud
-        if 'firebase' in st.secrets:
-            # Use secrets from Streamlit Cloud
-            cred = credentials.Certificate({
-                "type": st.secrets["firebase"]["type"],
-                "project_id": st.secrets["firebase"]["project_id"],
-                "private_key_id": st.secrets["firebase"]["private_key_id"],
-                "private_key": st.secrets["firebase"]["private_key"].replace('\\n', '\n'),
-                "client_email": st.secrets["firebase"]["client_email"],
-                "client_id": st.secrets["firebase"]["client_id"],
-                "auth_uri": st.secrets["firebase"]["auth_uri"],
-                "token_uri": st.secrets["firebase"]["token_uri"],
-                "auth_provider_x509_cert_url": st.secrets["firebase"]["auth_provider_x509_cert_url"],
-                "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"]
-            })
+        # Use local credentials file
+        cred_path = os.path.join(os.getcwd(), "firbase.json")
+        if not os.path.exists(cred_path):
+            st.error(f"Error: Firebase credentials file not found at {cred_path}")
         else:
-            # Use local credentials file
-            cred_path = os.path.join(os.getcwd(), "plant_disease_detection.json")
-            if not os.path.exists(cred_path):
-                st.error(f"Error: Firebase credentials file not found at {cred_path}")
-            else:
-                cred = credentials.Certificate(cred_path)
+            cred = credentials.Certificate(cred_path)
         
         firebase_admin.initialize_app(cred)
         db = firestore.client()
         st.success("Firebase connection established!")
     except Exception as e:
         st.error(f"Firebase initialization error: {str(e)}")
+        db = None
+else:
+    db = firestore.client()
 
-
-# -----------------------
-# 2. DEFINE LOGIN/SIGNUP
-# -----------------------
-# dimport firebase_admin
-from firebase_admin import auth
-
-def firebase_login(email: str, password: str):
-    """
-    Mock login function using Firebase Admin SDK.
-    NOTE: This does NOT verify the actual password!
-    1. Checks if a user record with the given email exists.
-    2. Returns a mock 'idToken' if found, or an error message if not.
-    """
-    try:
-        user_record = auth.get_user_by_email(email)
-        # Since the Admin SDK can't verify the password, we return a mock token.
-        return {
-            "idToken": "FAKE_ID_TOKEN",
-            "email": user_record.email,
-            "displayName": user_record.display_name or "",
-            "phoneNumber": user_record.phone_number or ""
-        }
-    except firebase_admin._auth_utils.UserNotFoundError:
-        # More explicit error if the user doesn't exist
-        return {"error": f"User with email '{email}' not found. Please sign up."}
-    except Exception as e:
-        return {"error": str(e)}
-
-def firebase_signup(email: str, password: str):
-    """
-    Creates a user with the given email and password using Firebase Admin SDK.
-    NOTE: This stores the password hash in Firebase Auth but doesn't verify it.
-    1. Attempts to create a user with the specified email & password.
-    2. Returns a mock 'idToken' on success, or an error message on failure.
-    """
-    try:
-        user_record = auth.create_user(email=email, password=password)
-        return {
-            "idToken": "FAKE_ID_TOKEN",
-            "email": user_record.email,
-            "uid": user_record.uid
-        }
-    except firebase_admin._auth_utils.EmailAlreadyExistsError:
-        # If the email is already in use, let the user know
-        return {"error": f"Email '{email}' is already in use. Please log in instead."}
-    except Exception as e:
-        return {"error": str(e)}
 
 
 # -----------------------
@@ -132,9 +61,39 @@ def init_session_defaults():
 # Call this function once, near the top of your script (after imports).
 init_session_defaults()
 
+# -----------------------
+# 4. LOGIN AND SIGNUP FUNCTIONS
+# -----------------------
+def firebase_login(email: str, password: str):
+    try:
+        user_record = auth.get_user_by_email(email)
+        return {
+            "idToken": "FAKE_ID_TOKEN",
+            "email": user_record.email,
+            "displayName": user_record.display_name or "",
+            "phoneNumber": user_record.phone_number or ""
+        }
+    except firebase_admin._auth_utils.UserNotFoundError:
+        return {"error": f"User with email '{email}' not found. Please sign up."}
+    except Exception as e:
+        return {"error": str(e)}
+
+def firebase_signup(email: str, password: str):
+    try:
+        user_record = auth.create_user(email=email, password=password)
+        return {
+            "idToken": "FAKE_ID_TOKEN",
+            "email": user_record.email,
+            "uid": user_record.uid
+        }
+    except firebase_admin._auth_utils.EmailAlreadyExistsError:
+        return {"error": f"Email '{email}' is already in use. Please log in instead."}
+    except Exception as e:
+        return {"error": str(e)}
+
 
 # -------------------
-# 4. LOAD MODEL ONCE
+# 5. LOAD MODEL ONCE
 # -------------------
 @st.cache_resource
 def load_model():
@@ -735,16 +694,7 @@ def login_page():
             st.session_state["app_mode"] = "home"
             st.rerun()
         else:
-            st.error("❌ Invalid credentials")
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #E0E0E0; text-align: center;'>Don't have an account?</p>", unsafe_allow_html=True)
-    
-    if st.button("Create Account"):
-        st.session_state["app_mode"] = "signup"
-        st.rerun()
-
-    st.markdown('</div>', unsafe_allow_html=True)
+            st.error(f"❌ {result.get('error', 'Invalid credentials')}")
 
 def forgot_password_page():
     """
@@ -1021,16 +971,6 @@ def signup_page():
                 st.rerun()
             else:
                 st.error(f"⚠️ Error: {result.get('error', 'Unknown error')}")
-
-
-    st.markdown("<hr>", unsafe_allow_html=True)
-    st.markdown("<p style='color: #E0E0E0; text-align: center;'>Already have an account?</p>", unsafe_allow_html=True)
-    
-    if st.button("Login"):
-        st.session_state["app_mode"] = "login"
-        st.rerun()
-
-    st.markdown('</div>', unsafe_allow_html=True)
 
 def home_page():
     """
@@ -1790,8 +1730,10 @@ def feedback_page():
 
             st.success("Thank you for your feedback!")
             st.balloons()
-        else:
-            st.error("Please enter some feedback before submitting.")
+            else:
+                st.error("Database connection not established.")
+    else:
+        st.error("Please enter some feedback before submitting.")
 
     # Contact Us Section
     contact_name = st.text_input("Your Name", key="contact_name")
