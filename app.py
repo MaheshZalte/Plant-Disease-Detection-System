@@ -23,12 +23,20 @@ db = None
 # Initialize Firebase only once
 if not firebase_admin._apps:
     try:
-        # Use local credentials file
-        cred_path = os.path.join(os.getcwd(), "firbase.json")
-        if not os.path.exists(cred_path):
-            st.error(f"Error: Firebase credentials file not found at {cred_path}")
-        else:
-            cred = credentials.Certificate(cred_path)
+        # Use environment variables for credentials
+        firebase_credentials = {
+            "type": os.getenv("FIREBASE_TYPE"),
+            "project_id": os.getenv("FIREBASE_PROJECT_ID"),
+            "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
+            "private_key": os.getenv("FIREBASE_PRIVATE_KEY").replace('\\n', '\n'),
+            "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
+            "client_id": os.getenv("FIREBASE_CLIENT_ID"),
+            "auth_uri": os.getenv("FIREBASE_AUTH_URI"),
+            "token_uri": os.getenv("FIREBASE_TOKEN_URI"),
+            "auth_provider_x509_cert_url": os.getenv("FIREBASE_AUTH_PROVIDER_X509_CERT_URL"),
+            "client_x509_cert_url": os.getenv("FIREBASE_CLIENT_X509_CERT_URL")
+        }
+        cred = credentials.Certificate(firebase_credentials)
         
         firebase_admin.initialize_app(cred)
         db = firestore.client()
@@ -1719,21 +1727,21 @@ def feedback_page():
     # Submit Button
     if st.button("Submit Feedback", key="submit_feedback"):
         if feedback_text.strip():
-            # Store the feedback in Firestore
-            db.collection("feedback").add({
-                "email": user_email,
-                "name": name,
-                "rating": rating,
-                "comments": feedback_text,
-                "timestamp": datetime.utcnow()
-            })
-
-            st.success("Thank you for your feedback!")
-            st.balloons()
+            if db is not None:
+                # Store the feedback in Firestore
+                db.collection("feedback").add({
+                    "email": user_email,
+                    "name": name,
+                    "rating": rating,
+                    "comments": feedback_text,
+                    "timestamp": datetime.utcnow()
+                })
+                st.success("Thank you for your feedback!")
+                st.balloons()
             else:
                 st.error("Database connection not established.")
-    else:
-        st.error("Please enter some feedback before submitting.")
+        else:
+            st.error("Please enter some feedback before submitting.")
 
     # Contact Us Section
     contact_name = st.text_input("Your Name", key="contact_name")
@@ -1744,15 +1752,18 @@ def feedback_page():
         if not contact_name.strip() or not contact_email.strip() or not contact_message.strip():
             st.error("Please fill out all fields before sending.")
         else:
-            # Store the contact message in Firestore
-            db.collection("contacts").add({
-                "name": contact_name,
-                "email": contact_email,
-                "message": contact_message,
-                "timestamp": datetime.utcnow()
-            })
-            st.success("Thank you! Your message has been sent.")
-            st.balloons()
+            if db is not None:
+                # Store the contact message in Firestore
+                db.collection("contacts").add({
+                    "name": contact_name,
+                    "email": contact_email,
+                    "message": contact_message,
+                    "timestamp": datetime.utcnow()
+                })
+                st.success("Thank you! Your message has been sent.")
+                st.balloons()
+            else:
+                st.error("Database connection not established.")
 
     # Go Back Button
     if st.button("Go Back", key="go_back"):
