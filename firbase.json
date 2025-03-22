@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "plant-disease-detection-2e61f",
+  "private_key_id": "6025838ab11a9cd0ab275b4098fef35b942cbeed",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC0wWiDPL72qfjp\nmQDuczuiB86xFAHihCiAVrtajstRkimxJyeIxW2Cf7zFNE5ddHAG3hblFvCkb7Oc\n3plC7Xo8FRNWgXGaCV3PdoeZG4aLh8v+aLbl0aQiRLdwBM087fwX7ScyH369n8fh\nyuHomQOQFc1RKPhJAxv48kIQUHVMU8eAYU550EHkn5sV0ZDMVWBeH0VO5xvuN48O\nLeYzlEAKyE6IJRVaOjDFluCZkGF8tknKo3svz7JSykxgCCBlT3NSdhC/wdVmubeS\nwz4NTDIGf6IBGcz3LMSlwm2JlzuU2HZuW8bv4LmzrgBTK4vy/nfO7w6XIHfdQdMu\nc+mEtTOHAgMBAAECggEAEA/FmS/LKkD1SNCbOBUOPfoioDKOblHfBXRvhn78yx1J\nTiAUD7+3WOq/2+gndH91uu5+K1IsBPiWBcDz7nIKtA8NXlj3PsBJUTePmgfLn1ds\nRYmJgwdrZc4kXLRYhmsBRSECJB6PVQs/KC2ugEwkeGevjGAvG9HGaQsh2rBDlAoR\nSROCHtm4PVZIiSboLj4Udmm5ssPm5wGWn0cOCcqPgir2+dNd4GBED8pXanLTyY2H\nf7KTbXjRSZIUO2xSA4qpXxOcHMIBjA9iPz5jq8ynkuRlQwuu1ttpJvJwcIaE3Jsc\nKK/kst5MCbdgtzTSf0rV3H4UHt2SBDADUNaaJWGN4QKBgQDxxDEcFMgBgUhVaeBD\nRO7tvE6C9fvS57XeJnQFHWspz1WSG6oOXGDkVkDRIuOXag/l9gkkiODfp4OdUAL5\n41oecJvZ/nnispAb9qUWcFDpiSXqN6QgH0A+7WBz+X1Jd/48vuSIKwX26BCb8gQC\nGc9gbozgKrtllWSNuImJqX0R5wKBgQC/Za81yShh1sdD8CYVftxLh7eQt5UHWn4D\nxnwUcDrVXAYKAARCz2vGgkPfu4FeYGalXVYsXFKDLDGzomHMawaLsI1iw7zS5VtK\nefR8DT2aJJjQwjsPT8qVv/Y2XGJrIOuDCpH6T+CteWnla3u8C6KcaA6hd/3nJRGg\nmImY+5vdYQKBgF0h9MEaiEl8If81P/zp6xiNt7jfRVjjhb3EFmF6CbQbeJ1GJuZN\nU83iJCnsRLwpUWKGutLmH6pIf3z0O5FDsY2UV5VMYGuh2b3L76CLN8Ae4wos0P7G\nyxrymntSmp7YqImCB8skt7F7iBpqynx8sNQ3AfHAxFvHhurJMcJkFhf1AoGBAJDj\nnTuOSC+os7hOd8YV/xZ+awv2ra6fZn3dJ9khDKivvTKcyJz7AI+J1W/tNgYH3Cya\n970lNqFuN0HRT0+8RXxB7wYxPyQ31GAQ6m9uZo/l3HlMUAFLWgT7CJwmW6rVhPPy\ncIeZKHCqVOwD7etws2zLqSe6+k6c1TdJwgA5mMiBAoGBANz9pL5taZDIokym1P+4\nEWUkkmLDTfplDMEuL8eFbkGC4x9CmkxP/ML1deQULstK3p2FLeQr1UOu+5nLZcJx\nNZ48wD8TWz0YKuqzV4lfVvrjXu+cnAxmWlfjMOOgMFpOi43HhyMDgT6G8nnv26K1\n/WKWW/QB5HkAFMCcrMHp/C2j\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@plant-disease-detection-2e61f.iam.gserviceaccount.com",
+  "client_id": "110356735652348587621",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40plant-disease-detection-2e61f.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
