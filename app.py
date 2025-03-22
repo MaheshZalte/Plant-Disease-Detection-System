@@ -106,7 +106,11 @@ def firebase_signup(email: str, password: str):
 @st.cache_resource
 def load_model():
     try:
-        return tf.keras.models.load_model("PlantDisease_Model.h5")
+        # Load the model with custom objects if needed
+        custom_objects = {
+            'InputLayer': tf.keras.layers.InputLayer
+        }
+        return tf.keras.models.load_model("PlantDisease_Model.h5", custom_objects=custom_objects)
     except Exception as e:
         st.error(f"Error loading model: {e}")
         return None
