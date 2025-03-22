@@ -110,7 +110,7 @@ def load_model():
         custom_objects = {
             'InputLayer': tf.keras.layers.InputLayer
         }
-        return tf.keras.models.load_model("PlantDisease_Model(1).h5", custom_objects=custom_objects)
+        return tf.keras.models.load_model("PlantDisease_Model.h5", custom_objects=custom_objects)
     except Exception as e:
         st.error(f"Error loading model: {e}")
         return None
