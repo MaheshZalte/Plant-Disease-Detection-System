@@ -4,7 +4,7 @@ numpy==1.23.5
 Pillow==10.2.0
 firebase-admin==6.4.0
 python-dotenv==1.0.1
-protobuf==3.20.3
+protobuf==4.25.8
 opencv-python-headless==4.8.0.74
 scikit-learn==1.2.2
 matplotlib==3.7.1
